@@ -1,0 +1,110 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  safeArea: { flex: 1 },
+  container: { flex: 1, paddingHorizontal: 20, flexDirection: 'column', alignContent: 'space-between' },
+  topNav: {
+    marginTop: 10,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    paddingVertical: 15,
+    backgroundColor: 'transparent',
+  },
+  backButton: { fontSize: 24, fontWeight: 'bold' },
+  navText: { fontSize: 16 },
+  boxHeader: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    paddingVertical: 20,
+    backgroundColor: 'transparent',
+    paddingInline: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  diamond: { width: 40, height: 40, transform: [{ rotate: '45deg' }] },
+  boxName: { fontSize: 22, fontWeight: 'bold' },
+  boxAddress: {  },
+  refreshIcon: { fontSize: 20, fontWeight: 'bold' },
+  statusRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginVertical: 20,
+    backgroundColor: 'transparent'
+  },
+  cameraButton: {
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+  },
+  cameraButtonText: { fontSize: 16, color: '#333' },
+  onlineStatus: { flexDirection: 'row', alignItems: 'center', backgroundColor: 'transparent' },
+  onlineText: { fontSize: 24, fontWeight: 'bold', color: 'green', marginRight: 10 },
+  ownerCircle: { width: 30, height: 30, borderRadius: 30, marginLeft: -10, backgroundColor: '#ff0000ff' },
+  statusGrid: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    marginBottom: 10,
+    backgroundColor: 'transparent'
+  },
+  statusBox: {
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    padding: 15,
+    alignItems: 'center',
+    width: '30%',
+  },
+  statusBoxValue: { fontSize: 20, fontWeight: 'bold' },
+  statusBoxLabel: { fontSize: 12, color: '#666', marginTop: 5 },
+  infoGrid: {
+      flexDirection: 'row',
+      justifyContent: 'space-around',
+      marginBottom: 10,
+      backgroundColor: 'transparent',
+  },
+  infoBox: {
+      borderWidth: 1,
+      borderColor: '#ccc',
+      borderRadius: 8,
+      padding: 15,
+      alignItems: 'center',
+      width: '48%',
+  },
+  infoBoxValue: { fontSize: 18, fontWeight: 'bold' },
+  infoBoxLabel: { fontSize: 14, color: '#666', marginTop: 5 },
+  unlockContainer: {
+    alignItems: 'center',
+    marginVertical: 20,
+    backgroundColor: 'transparent',
+    flex: 1
+  },
+  unlockButton: {
+    width: 180,
+    height: 180,
+    borderRadius: 90,
+    borderWidth: 2,
+    borderColor: '#333',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  unlockText: {
+    fontSize: 18,
+    color: '#333',
+  },
+    bottomContent: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    paddingTop: 20,
+  },
+  bottomText: {
+    fontSize: 16,
+    color: '#cbcbcbff'
+  },
+});

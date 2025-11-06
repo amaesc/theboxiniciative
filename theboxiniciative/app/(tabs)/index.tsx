@@ -1,98 +1,301 @@
-import { Image } from 'expo-image';
-import { Platform, StyleSheet } from 'react-native';
-
-import { HelloWave } from '@/components/hello-wave';
-import ParallaxScrollView from '@/components/parallax-scroll-view';
+import React, { useState } from 'react';
+import {
+  StyleSheet,
+  TextInput,
+  TouchableOpacity,
+  SafeAreaView,
+  KeyboardAvoidingView,
+  Platform,
+  ScrollView,
+  View,
+} from 'react-native';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
-import { Link } from 'expo-router';
+import { useRouter } from 'expo-router'; // Import the router
 
-export default function HomeScreen() {
+// A simple component for the logo placeholder
+const Logo = () => (
+  <ThemedView style={styles.logoContainer}>
+    <ThemedView style={styles.logo} />
+  </ThemedView>
+);
+
+// TypeScript props for the Login form
+type LoginScreenProps = {
+  onSwitchToSignUp: () => void;
+};
+
+// The Login Screen Component
+const LoginScreen = ({ onSwitchToSignUp }: LoginScreenProps) => {
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
+  const router = useRouter(); // Get the router instance
+
+  const handleLogin = () => {
+    // TODO: Add your actual login logic here
+    console.log('Logging in with:', username, password);
+    // On successful login, navigate to the home screen
+    router.replace('/home');
+  };
+
   return (
-    <ParallaxScrollView
-      headerBackgroundColor={{ light: '#A1CEDC', dark: '#1D3D47' }}
-      headerImage={
-        <Image
-          source={require('@/assets/images/partial-react-logo.png')}
-          style={styles.reactLogo}
-        />
-      }>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title">Welcome!</ThemedText>
-        <HelloWave />
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 1: Try it</ThemedText>
-        <ThemedText>
-          Edit <ThemedText type="defaultSemiBold">app/(tabs)/index.tsx</ThemedText> to see changes.
-          Press{' '}
-          <ThemedText type="defaultSemiBold">
-            {Platform.select({
-              ios: 'cmd + d',
-              android: 'cmd + m',
-              web: 'F12',
-            })}
-          </ThemedText>{' '}
-          to open developer tools.
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <Link href="/modal">
-          <Link.Trigger>
-            <ThemedText type="subtitle">Step 2: Explore</ThemedText>
-          </Link.Trigger>
-          <Link.Preview />
-          <Link.Menu>
-            <Link.MenuAction title="Action" icon="cube" onPress={() => alert('Action pressed')} />
-            <Link.MenuAction
-              title="Share"
-              icon="square.and.arrow.up"
-              onPress={() => alert('Share pressed')}
-            />
-            <Link.Menu title="More" icon="ellipsis">
-              <Link.MenuAction
-                title="Delete"
-                icon="trash"
-                destructive
-                onPress={() => alert('Delete pressed')}
-              />
-            </Link.Menu>
-          </Link.Menu>
-        </Link>
+    <ThemedView style={styles.formContainer}>
+      <ThemedText type="subtitle" style={styles.title}>
+        Login
+      </ThemedText>
 
-        <ThemedText>
-          {`Tap the Explore tab to learn more about what's included in this starter app.`}
-        </ThemedText>
+      <TextInput
+        style={styles.input}
+        placeholder="Username / Email"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
+        keyboardType="email-address"
+        placeholderTextColor="#888"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        placeholderTextColor="#888"
+      />
+
+      <ThemedView style={styles.buttonRow}>
+        <TouchableOpacity onPress={onSwitchToSignUp}>
+          <ThemedText style={styles.linkText}>Create an account</ThemedText>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleLogin}>
+          <ThemedText style={styles.buttonText}>Enter</ThemedText>
+        </TouchableOpacity>
       </ThemedView>
-      <ThemedView style={styles.stepContainer}>
-        <ThemedText type="subtitle">Step 3: Get a fresh start</ThemedText>
-        <ThemedText>
-          {`When you're ready, run `}
-          <ThemedText type="defaultSemiBold">npm run reset-project</ThemedText> to get a fresh{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> directory. This will move the current{' '}
-          <ThemedText type="defaultSemiBold">app</ThemedText> to{' '}
-          <ThemedText type="defaultSemiBold">app-example</ThemedText>.
-        </ThemedText>
+    </ThemedView>
+  );
+};
+
+// TypeScript props for the Sign Up form
+type SignUpScreenProps = {
+  onSwitchToLogin: () => void;
+};
+
+// The Sign Up Screen Component
+const SignUpScreen = ({ onSwitchToLogin }: SignUpScreenProps) => {
+  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [repeatPassword, setRepeatPassword] = useState('');
+
+  const handleSignUp = () => {
+    // TODO: Add your actual sign-up logic here
+    if (password !== repeatPassword) {
+      console.warn("Passwords don't match!");
+      return;
+    }
+    console.log('Signing up with:', username, email, password);
+  };
+
+  return (
+    <ThemedView style={styles.formContainer}>
+      <ThemedText type="subtitle" style={styles.title}>
+        Sign Up
+      </ThemedText>
+
+      <TextInput
+        style={styles.input}
+        placeholder="Username"
+        value={username}
+        onChangeText={setUsername}
+        autoCapitalize="none"
+        placeholderTextColor="#888"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Email"
+        value={email}
+        onChangeText={setEmail}
+        autoCapitalize="none"
+        keyboardType="email-address"
+        placeholderTextColor="#888"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Password"
+        value={password}
+        onChangeText={setPassword}
+        secureTextEntry
+        placeholderTextColor="#888"
+      />
+      <TextInput
+        style={styles.input}
+        placeholder="Repeat Password"
+        value={repeatPassword}
+        onChangeText={setRepeatPassword}
+        secureTextEntry
+        placeholderTextColor="#888"
+      />
+
+      <ThemedView style={styles.buttonRow}>
+        <TouchableOpacity onPress={onSwitchToLogin}>
+          <ThemedText style={styles.linkText}>Already have an account?</ThemedText>
+        </TouchableOpacity>
+        <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+          <ThemedText style={styles.buttonText}>Register</ThemedText>
+        </TouchableOpacity>
       </ThemedView>
-    </ParallaxScrollView>
+    </ThemedView>
+  );
+};
+
+// Main component that decides which screen to show
+export default function AuthScreen() {
+  const [showLogin, setShowLogin] = useState(true);
+
+  return (
+    <SafeAreaView style={styles.safeArea}>
+      <ThemedView style={styles.container}>
+        
+        {/* --- TOP SECTION (FIXED) --- */}
+        <View>
+          <ThemedView style={styles.languageBar}>
+            <TouchableOpacity onPress={() => alert('Language switcher pressed!')}>
+              <ThemedText style={styles.languageText}>English</ThemedText>
+            </TouchableOpacity>
+          </ThemedView>
+
+          <ThemedView style={styles.header}>
+            <ThemedText type="title" style={styles.headerText}>
+              THE BOX INICIATIVE
+            </ThemedText>
+          </ThemedView>
+
+          <Logo />
+        </View>
+
+        {/* --- MIDDLE SECTION (SCROLLABLE & CENTERED) --- */}
+        <KeyboardAvoidingView
+          behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+          style={styles.middleSection}>
+          <ScrollView
+            contentContainerStyle={styles.middleScrollViewContent}
+            keyboardShouldPersistTaps="handled">
+            {showLogin ? (
+              <LoginScreen onSwitchToSignUp={() => setShowLogin(false)} />
+            ) : (
+              <SignUpScreen onSwitchToLogin={() => setShowLogin(true)} />
+            )}
+          </ScrollView>
+        </KeyboardAvoidingView>
+        
+        {/* --- BOTTOM SECTION (FIXED) --- */}
+        <ThemedView style={styles.bottomContent}>
+          <ThemedText style={styles.bottomText}>Boxes List (Scroll)</ThemedText>
+        </ThemedView>
+
+      </ThemedView>
+    </SafeAreaView>
   );
 }
 
+// All the styles for the components
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
+  safeArea: {
+    flex: 1,
+  },
+  container: {
+    flex: 1,
+    justifyContent: 'space-between',
+    padding: 20,
+  },
+  middleSection: {
+    flex: 1,
+  },
+  middleScrollViewContent: {
+    flexGrow: 1,
+    justifyContent: 'center',
+  },
+  languageBar: {
+    backgroundColor: 'transparent',
+    alignItems: 'flex-start',
+    paddingBottom: 10,
+    marginBottom: 10,
+    borderBottomWidth: 1,
+    borderBottomColor: '#eee',
+  },
+  languageText: {
+    marginTop: 10,
+    fontSize: 14,
+  },
+  header: {
     alignItems: 'center',
-    gap: 8,
+    marginBottom: 20,
+    backgroundColor: 'transparent',
   },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
+  headerText: {
+    marginTop: 10,
+    letterSpacing: 1,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  logoContainer: {
+    alignItems: 'center',
+    marginVertical: 15, 
+    backgroundColor: 'transparent',
+  },
+  logo: {
+    width: 80,
+    height: 80,
+    backgroundColor: '#333',
+    borderRadius: 15,
+  },
+  formContainer: {
+    width: '100%',
+    backgroundColor: 'transparent',
+  },
+  title: {
+    marginBottom: 20,
+  },
+  input: {
+    backgroundColor: '#fff',
+    color: '#000',
+    borderWidth: 1,
+    borderColor: '#ccc',
+    borderRadius: 8,
+    paddingHorizontal: 15,
+    paddingVertical: 12,
+    fontSize: 16,
+    marginBottom: 15,
+  },
+  buttonRow: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginTop: 10,
+    backgroundColor: 'transparent',
+  },
+  button: {
+    backgroundColor: '#fff',
+    borderWidth: 1,
+    borderColor: '#333',
+    borderRadius: 8,
+    paddingHorizontal: 25,
+    paddingVertical: 12,
+  },
+  buttonText: {
+    fontSize: 16,
+    fontWeight: '600',
+    color: '#333',
+  },
+  linkText: {
+    fontSize: 14,
+    textDecorationLine: 'underline',
+  },
+  bottomContent: {
+    alignItems: 'center',
+    paddingTop: 20,
+    borderTopWidth: 1,
+    borderTopColor: '#eee',
+    backgroundColor: 'transparent',
+  },
+  bottomText: {
+    fontSize: 16,
   },
 });
